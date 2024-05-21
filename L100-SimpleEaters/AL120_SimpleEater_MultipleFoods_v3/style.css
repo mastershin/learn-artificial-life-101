@@ -1,0 +1,39 @@
+html {
+    height: 100%;
+    width: 100%;
+  }
+  
+  #game-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    margin: 10px;
+  
+    /* center vertically */
+    /* justify-content: center; */
+  
+    /* horizontal center */
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  #controls {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 800px;
+  }
+  
+  #controls label {
+    margin-right: 10px;
+  }
+  
+  #game {
+    width: 100%;
+    background-color: #f0f0f0;
+    /* Example background color */
+    border: 5px solid #000;
+  }
