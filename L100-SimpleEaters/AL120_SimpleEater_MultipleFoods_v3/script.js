@@ -28,7 +28,7 @@ kaboom({
 
 
 add([
-  text("Artificial Life: Simple Eater v1", { size: 18 }),
+  text("Artificial Life: Simple Eater Multiple Foods v3", { size: 18 }),
   pos(10, 10),
 ]);
 
