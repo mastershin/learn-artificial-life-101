@@ -77,6 +77,10 @@ class GraphicsEngine {
         this.renderer.render(this.scene, this.camera);
     }
 
+    createAxesHelper(size) {
+        const axesHelper = new THREE.AxesHelper(size);
+        return axesHelper;
+    }
     createSphere(size, color, position) {
         const geometry = new THREE.SphereGeometry(size / 2, 32);
         const material = new THREE.MeshPhongMaterial({
@@ -95,7 +99,7 @@ class GraphicsEngine {
 
     createPlane(size, color) {
         const geometry = new THREE.PlaneGeometry(size, size);
-        geometry.rotateX(-Math.PI / 2);
+        // geometry.rotateX(-Math.PI / 2);
         const material = new THREE.MeshPhongMaterial({
             color: color,
             side: THREE.DoubleSide,
@@ -108,6 +112,7 @@ class GraphicsEngine {
 
     createGrid(size) {
         const grid = new THREE.GridHelper(size, size);
+        grid.rotateX(-Math.PI / 2);
         grid.translateZ(0.1); // move grid up slightly to avoid z-fighting
         // grid.material.opacity = 0.5;
         // grid.material.transparent = true;

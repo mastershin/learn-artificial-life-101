@@ -68,6 +68,8 @@ engine.addObject(floor);
 const grid = engine.createGrid(50);
 engine.addObject(grid);
 
+const axesHelper = engine.createAxesHelper(5);
+engine.addObject(axesHelper);
 
 function animate() {
     requestAnimationFrame(animate);
