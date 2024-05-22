@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<!--
+
+Conway Game of Life in 3D.
+
+@date: 2024-05-22
+@author: Jae Y Shin, github.com/mastershin
+-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Conway Game of Life 3D v1</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.142.0/build/three.module.js",
+        "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.142.0/examples/jsm/controls/OrbitControls.js",
+        "M3D": "./M3D.js"
+      }
+    }
+  </script>
+
+  <div id="threejs-container"></div>
+
+    <div id="controls">
+        <label>
+            Speed: <input type="range" id="speed" min="1" max="200" value="80">
+        </label>
+        <label>
+            Grid Size: <input type="number" id="gridSize" min="5" max="40" value="30">
+        </label>
+        <label>
+            Cell Size: <input type="number" id="cellSize" min="0.5" max="5" step="0.5" value="2">
+        </label>
+
+    </div>
+
+    <div id="text1">Conway Game of Life 3D</div>
+    <div id="text2"><a href="https://github.com/mastershin/learn-artificial-life-101/L200-SimpleEaters-3D/AL300-ConwayGameOfLife/">Github</a></div>
+
+    <div>
+    <script type="module" src="script.js"></script>
+    </div>
+
+
+    <script>
+        /*
+        var text1 = document.createElement('div');
+        text1.style.position = 'absolute';
+        //text1.style.zIndex = 1;
+        text1.style.width = 500;
+        text1.style.height = 100;
+        // text1.style.backgroundColor = "blue";
+        text1.style.color = "white";
+        text1.innerHTML = "Conway Game of Life 3D v1";
+        text1.style.top = 100 + 'px';
+        text1.style.left = 20 + 'px';
+        document.body.appendChild(text1);
+
+        var text2 = document.createElement('div');
+        text2.style.position = 'absolute';
+        //text2.style.zIndex = 1;
+        text2.style.width = 500;
+        text2.style.height = 100;
+        // text2.style.backgroundColor = "blue";
+        text2.style.color = "white";
+        text2.innerHTML = "github.com/mastershin/learn-artificial-life-101/L200-SimpleEaters-3D/AL300-ConwayGameOfLife/";
+        text2.style.top = 140 + 'px';
+        text2.style.left = 20 + 'px';
+        document.body.appendChild(text2);
+*/
+    </script>
+</body>
+
+</html>
