@@ -98,7 +98,10 @@ class GraphicsEngine {
     }
 
     createPlane(size, color) {
-        const geometry = new THREE.PlaneGeometry(size, size);
+        const widthSegments = 1;
+        const heightSegments = 1;
+        const geometry = new THREE.PlaneGeometry(size, size, widthSegments, heightSegments);
+        
         // geometry.rotateX(-Math.PI / 2);
         const material = new THREE.MeshPhongMaterial({
             color: color,
