@@ -1,5 +1,9 @@
 import { GraphicsEngine } from "M3D";
 
+const SPEED = 1;
+const LIFE_SIZE = 50;
+const FOOD_SIZE = 16;
+
 // import * as THREE from 'three';
 // import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
@@ -29,7 +33,6 @@ class LifeForm {
     const dy = target.mesh.position.y - this.mesh.position.y;
     const dz = target.mesh.position.z - this.mesh.position.z;
 
-
     const direction = new Vec3(dx, dy, dz).normalize();
     this.mesh.position.x += direction.x * speed;
     this.mesh.position.y += direction.y * speed;
@@ -52,10 +55,6 @@ function getRandomPosition() {
   const z = Math.random() * 100 + 50;
   return new Vec3(x, y, z);
 }
-
-const SPEED = 1;
-const LIFE_SIZE = 50;
-const FOOD_SIZE = 16;
 
 const engine = new GraphicsEngine();
 
