@@ -9,6 +9,8 @@ import kaboom from "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs";
 @deployed: https://replit.com/@mastershin1/AL100SimpleEaterKaboomv1
 */
 
+import kaboom from "kaboom"
+
 // Initialize Kaboom
 kaboom({
     // width: 640,

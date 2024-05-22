@@ -9,8 +9,13 @@ The eater does not have a vision.
 
 @author: Jae Shin - mastershin at gmail dot com
 @source: github.com/mastershin/learn-artificial-life-101
-@deployed: https://replit.com/@mastershin1/AL110SimpleEaterWithEyev2
+
+# Deployed at:
+- https://replit.com/@mastershin1/AL110SimpleEaterWithEyev2
+- https://editor.p5js.org/mastershin/sketches/6YN_5lZGb
 */
+
+import kaboom from "kaboom"
 
 // Initialize Kaboom
 kaboom({

@@ -6,7 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Artificial Life: Simple Eater Multiple Foods with UI v3</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "kaboom": "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs"
+      }
+    }
+  </script>
+  
+  <!-- to use as a regular script:
   <script src="https://unpkg.com/kaboom@3000.0.1/dist/kaboom.js"></script>
+  -->
+
 </head>
 
 <body>
@@ -30,13 +42,16 @@
         <span id="foodEatingTimeValue">200</span>
       </div>
 
+      <div>
+        <a href="https://github.com/mastershin/learn-artificial-life-101/tree/main/L100-SimpleEaters/AL120_SimpleEater_MultipleFoods_v3">GitHub.com Source Code</a>
+      </div>
     </div>
 
     <canvas id="game" width="800" height="600"></canvas>
 
   </div>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 
 </body>
 

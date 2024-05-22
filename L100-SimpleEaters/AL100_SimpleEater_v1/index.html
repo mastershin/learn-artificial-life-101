@@ -13,11 +13,22 @@
       width: 100%;
     }
   </style>
-  <script src="https://unpkg.com/kaboom@3000.0.1/dist/kaboom.js"></script>
+
+<script type="importmap">
+  {
+    "imports": {
+      "kaboom": "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs"
+    }
+  }
+</script>
+
+<!-- to use as a regular script:
+<script src="https://unpkg.com/kaboom@3000.0.1/dist/kaboom.js"></script>
+-->
+
+
 </head>
-
 <body>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
-
 </html>

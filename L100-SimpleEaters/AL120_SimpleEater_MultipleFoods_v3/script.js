@@ -17,6 +17,8 @@ The eater does not have a vision.
 - https://replit.com/@mastershin1/AL120SimpleEaterMultipleFoodsv3
 */
 
+import kaboom from "kaboom"
+
 // Initialize Kaboom
 kaboom({
   width: 800, // Set a specific width
