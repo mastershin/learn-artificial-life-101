@@ -1,3 +1,5 @@
+// @version: 1.0
+
 import { GraphicsEngine } from "M3D";
 
 const SPEED = 0.1;

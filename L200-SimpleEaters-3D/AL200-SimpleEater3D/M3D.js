@@ -1,3 +1,5 @@
+// @version: 0.1
+
 import * as THREE from "three";
 import { OrbitControls } from "OrbitControls";
 // import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
@@ -101,6 +103,7 @@ class GraphicsEngine {
         const widthSegments = 1;
         const heightSegments = 1;
         const geometry = new THREE.PlaneGeometry(size, size, widthSegments, heightSegments);
+        geometry.translate(0, 0, -0.1);
         
         // geometry.rotateX(-Math.PI / 2);
         const material = new THREE.MeshPhongMaterial({
