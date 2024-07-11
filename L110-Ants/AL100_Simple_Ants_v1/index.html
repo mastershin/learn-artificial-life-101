@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ant Simulation</title>
+    <style>
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            font-family: Arial, sans-serif; 
+        }
+        canvas { 
+            border: 1px solid black; 
+            margin-top: 20px; 
+        }
+        #controls {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ant Simulation</h1>
+    <canvas id="simulationCanvas" width="800" height="600"></canvas>
+    <div id="controls">
+        <label for="antCount">Number of Ants: </label>
+        <input type="range" id="antCount" name="antCount" min="1" max="1000" value="100">
+        <span id="antCountValue">100</span>
+        <br>
+        <label for="antSpeed">Ant Speed: </label>
+        <input type="range" id="antSpeed" name="antSpeed" min="0.1" max="3" value="2">
+        <span id="antSpeedValue">2</span>
+        <br>
+        <label for="pheromoneDecayRate">Pheromone Decay Rate: </label>
+        <input type="range" id="pheromoneDecayRate" name="pheromoneDecayRate" min="1" max="100" value="20">
+        <span id="pheromoneDecayRateValue">20</span>
+        <br>
+        <label for="antLifespan">Ant Lifespan (seconds): </label>
+        <input type="range" id="antLifespan" name="antLifespan" min="5" max="100" value="30">
+        <span id="antLifespanValue">30</span>
+    </div>
+    <script>
+        const canvas = document.getElementById('simulationCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const antSlider = document.getElementById('antCount');
+        const antCountValue = document.getElementById('antCountValue');
+        const speedSlider = document.getElementById('antSpeed');
+        const speedValue = document.getElementById('antSpeedValue');
+        const pheromoneSlider = document.getElementById('pheromoneDecayRate');
+        const pheromoneDecayRateValue = document.getElementById('pheromoneDecayRateValue');
+        const lifespanSlider = document.getElementById('antLifespan');
+        const lifespanValue = document.getElementById('antLifespanValue');
+
+        let ants = [];
+        let pheromones = [];
+        let numAnts = parseInt(antSlider.value);
+        let antSpeed = parseFloat(speedSlider.value);
+        let pheromoneDecayRate = parseFloat(pheromoneSlider.value) / 1000;
+        let antLifespan = parseFloat(lifespanSlider.value) * 1000;
+
+        class Ant {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = 5;
+                this.alive = true;
+                this.creationTime = Date.now();
+                this.lifespan = antLifespan === 100000 ? Infinity : Math.random() * antLifespan; // Random lifespan up to max lifespan
+                this.vx = Math.random() * 2 - 1;
+                this.vy = Math.random() * 2 - 1;
+            }
+
+            move() {
+                if (this.alive) {
+                    let pheromone = this.followPheromone();
+                    if (pheromone) {
+                        this.x += (pheromone.x - this.x) * 0.1 * antSpeed + this.vx * antSpeed;
+                        this.y += (pheromone.y - this.y) * 0.1 * antSpeed + this.vy * antSpeed;
+                    } else {
+                        this.x += this.vx * antSpeed;
+                        this.y += this.vy * antSpeed;
+                    }
+                    this.vx += (Math.random() * 0.2 - 0.1) * antSpeed;
+                    this.vy += (Math.random() * 0.2 - 0.1) * antSpeed;
+                    const speed = Math.hypot(this.vx, this.vy);
+                    if (speed > 2 * antSpeed) {
+                        this.vx *= (2 * antSpeed) / speed;
+                        this.vy *= (2 * antSpeed) / speed;
+                    }
+                    this.handleWallCollisions();
+                }
+            }
+
+            handleWallCollisions() {
+                if (this.x <= 0 || this.x >= canvas.width) {
+                    this.vx = -this.vx;
+                    this.randomVelocityAdjustment();
+                }
+                if (this.y <= 0 || this.y >= canvas.height) {
+                    this.vy = -this.vy;
+                    this.randomVelocityAdjustment();
+                }
+            }
+
+            randomVelocityAdjustment() {
+                if (Math.random() < 0.1) { // 10% probability
+                    this.vx = Math.random() * 2 - 1;
+                    this.vy = Math.random() * 2 - 1;
+                }
+            }
+
+            followPheromone() {
+                let closest = null;
+                let closestDist = Infinity;
+                for (let pheromone of pheromones) {
+                    let dist = Math.hypot(this.x - pheromone.x, this.y - pheromone.y);
+                    if (dist < closestDist && dist < 50) {
+                        closestDist = dist;
+                        closest = pheromone;
+                    }
+                }
+                return closest;
+            }
+
+            draw() {
+                ctx.fillStyle = 'black';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            depositPheromone() {
+                pheromones.push(new Pheromone(this.x, this.y));
+            }
+
+            checkLifespan() {
+                if (Date.now() - this.creationTime > this.lifespan) {
+                    this.alive = false;
+                }
+            }
+        }
+
+        class Pheromone {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.lifetime = 1;
+                this.decayRate = pheromoneDecayRate;
+            }
+
+            update() {
+                this.lifetime -= this.decayRate;
+                if (this.lifetime <= 0) {
+                    this.lifetime = 0;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(255, 0, 0, ${this.lifetime})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initializeAnts() {
+            ants = [];
+            for (let i = 0; i < numAnts; i++) {
+                ants.push(new Ant(Math.random() * canvas.width, Math.random() * canvas.height));
+            }
+        }
+
+        function updateSimulation() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let pheromone of pheromones) {
+                pheromone.update();
+                pheromone.draw();
+            }
+
+            ants = ants.filter(ant => ant.alive); // Remove dead ants
+
+            for (let ant of ants) {
+                if (ant.alive) {
+                    ant.move();
+                    ant.checkLifespan();
+                    ant.depositPheromone();
+                }
+                ant.draw();
+            }
+
+            pheromones = pheromones.filter(pheromone => pheromone.lifetime > 0);
+        }
+
+        function animate() {
+            updateSimulation();
+            setTimeout(animate, 10); // 100 milliseconds = 10 updates per second
+        }
+
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            ants.push(new Ant(x, y));
+        });
+
+        antSlider.addEventListener('input', () => {
+            numAnts = parseInt(antSlider.value);
+            antCountValue.textContent = numAnts;
+            initializeAnts();
+        });
+
+        speedSlider.addEventListener('input', () => {
+            antSpeed = parseInt(speedSlider.value);
+            speedValue.textContent = antSpeed;
+        });
+
+        pheromoneSlider.addEventListener('input', () => {
+            pheromoneDecayRate = parseInt(pheromoneSlider.value) / 1000;
+            pheromoneDecayRateValue.textContent = pheromoneSlider.value;
+        });
+
+        lifespanSlider.addEventListener('input', () => {
+            antLifespan = parseInt(lifespanSlider.value) * 1000;
+            lifespanValue.textContent = lifespanSlider.value;
+        });
+
+        initializeAnts();
+        animate();
+    </script>
+</body>
+</html>
